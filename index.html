@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄氏温度规定教学动画</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a3c7f, #3d5a80);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            max-width: 900px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #ffcc00;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #aaddff;
+        }
+        
+        .intro {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 800px;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .scientist {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portrait {
+            width: 180px;
+            height: 220px;
+            background: linear-gradient(135deg, #8b7355, #a08669);
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 5px solid #d4af37;
+        }
+        
+        .face {
+            position: absolute;
+            width: 110px;
+            height: 130px;
+            background: #f9d9aa;
+            border-radius: 50%;
+            top: 35px;
+            left: 35px;
+        }
+        
+        .hair {
+            position: absolute;
+            width: 130px;
+            height: 70px;
+            background: #3a2c1e;
+            border-radius: 70px 70px 0 0;
+            top: 15px;
+            left: 25px;
+        }
+        
+        .eyes {
+            position: absolute;
+            width: 90px;
+            height: 20px;
+            top: 80px;
+            left: 45px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .eye {
+            width: 14px;
+            height: 14px;
+            background: #1a1a1a;
+            border-radius: 50%;
+        }
+        
+        .mouth {
+            position: absolute;
+            width: 35px;
+            height: 5px;
+            background: #8b4513;
+            border-radius: 5px;
+            top: 115px;
+            left: 72px;
+        }
+        
+        .body {
+            position: absolute;
+            width: 140px;
+            height: 90px;
+            background: #2c4f6b;
+            top: 125px;
+            left: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .speech-bubble {
+            position: relative;
+            background: white;
+            color: #333;
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 15px;
+            max-width: 230px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.95rem;
+        }
+        
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 20%;
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+        }
+        
+        .scientist-info {
+            text-align: center;
+        }
+        
+        .scientist-info h2 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            color: #ffcc00;
+        }
+        
+        .scientist-info p {
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        
+        .experiment {
+            flex: 2;
+            min-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .apparatus {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+        
+        .beaker {
+            position: relative;
+            width: 350px;
+            height: 380px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 0 0 50px 50px;
+            border: 10px solid rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, #4facfe, #00f2fe);
+            transition: all 1.5s ease;
+        }
+        
+        .ice {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .bubbles {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: bubble-rise linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes bubble-rise {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-380px) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        .thermometer-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .thermometer {
+            width: 35px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            border: 5px solid #333;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .mercury {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to top, #ff416c, #ff4b2b);
+            transition: height 1.5s ease;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .scale {
+            position: absolute;
+            left: -60px;
+            width: 50px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .scale-mark {
+            width: 100%;
+            height: 2px;
+            background: #333;
+            position: relative;
+        }
+        
+        .scale-mark::after {
+            content: attr(data-value) "°C";
+            position: absolute;
+            left: -45px;
+            top: -10px;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .scale-mark.major::after {
+            left: -55px;
+            font-size: 18px;
+        }
+        
+        .highlight-area {
+            position: absolute;
+            left: -80px;
+            width: 180px;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .highlight {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 215, 0, 0.2);
+            border: 3px dashed gold;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .division-marks {
+            position: absolute;
+            left: -80px;
+            width: 180px;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .division-mark {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .temperature-display {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .temp-control {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .temp-control h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 12px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #4facfe, #00f2fe, #ff416c);
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: #ffcc00;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .temp-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            background: #ffaa00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .explanation {
+            max-width: 900px;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .explanation h3 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            z-index: 10;
+        }
+        
+        .division-explanation {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.5s;
+            width: 280px;
+            text-align: center;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .audio-btn {
+            background: #4CAF50;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .audio-btn:hover {
+            background: #66BB6A;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .experiment {
+                min-width: 100%;
+            }
+            
+            .apparatus {
+                height: 400px;
+            }
+            
+            .beaker {
+                width: 280px;
+                height: 320px;
+            }
+            
+            .thermometer {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>摄氏温度规定教学动画</h1>
+        <p class="subtitle">安德斯·摄尔修斯与摄氏温标的创立</p>
+        <div class="intro">
+            <p>安德斯·摄尔修斯（1701-1744）是瑞典天文学家，他于1742年提出了摄氏温标，也称为百分温度。他将水的冰点定义为0度，沸点定义为100度，并将两者之间分为100等份。</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="scientist">
+            <div class="portrait">
+                <div class="hair"></div>
+                <div class="face"></div>
+                <div class="eyes">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                </div>
+                <div class="mouth"></div>
+                <div class="body"></div>
+            </div>
+            <div class="scientist-info">
+                <h2>安德斯·摄尔修斯</h2>
+                <p>瑞典天文学家、物理学家</p>
+                <p>1701-1744</p>
+                <p>摄氏温标创始人</p>
+            </div>
+            <div class="speech-bubble" id="speechBubble">
+                欢迎！我是安德斯·摄尔修斯。让我向您介绍我提出的摄氏温标。
+            </div>
+            <div class="audio-controls">
+                <button class="audio-btn" id="playSpeechBtn">播放语音</button>
+                <button class="audio-btn" id="stopSpeechBtn">停止语音</button>
+            </div>
+        </div>
+        
+        <div class="experiment">
+            <div class="apparatus">
+                <div class="beaker">
+                    <div class="liquid" id="liquid"></div>
+                    <div class="bubbles" id="bubbles"></div>
+                    <div class="ice" id="ice1" style="left: 40px; bottom: 80px;"></div>
+                    <div class="ice" id="ice2" style="left: 160px; bottom: 120px;"></div>
+                    <div class="ice" id="ice3" style="left: 90px; bottom: 160px;"></div>
+                </div>
+                
+                <div class="thermometer-container">
+                    <div class="thermometer">
+                        <div class="mercury" id="mercury"></div>
+                        <div class="scale" id="scale"></div>
+                        <div class="highlight-area">
+                            <div class="highlight" id="highlight"></div>
+                        </div>
+                        <div class="division-marks" id="divisionMarks"></div>
+                    </div>
+                    <div class="division-explanation" id="divisionExplanation">
+                        0°C到100°C之间分为100等份，每份代表1°C
+                    </div>
+                </div>
+                
+                <div class="temperature-display" id="tempDisplay">0°C</div>
+            </div>
+            
+            <div class="controls">
+                <div class="temp-control">
+                    <h3>温度控制</h3>
+                    <div class="slider-container">
+                        <span>0°C</span>
+                        <input type="range" id="tempSlider" min="0" max="100" value="0">
+                        <span>100°C</span>
+                        <div class="temp-value" id="tempValue">0°C</div>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button id="icePointBtn">冰点 (0°C)</button>
+                    <button id="boilingPointBtn">沸点 (100°C)</button>
+                    <button id="showDivisionBtn">显示100等分</button>
+                    <button id="playBtn">播放动画</button>
+                    <button id="resetBtn">重置</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>摄氏温度规定</h3>
+        <p>在标准大气压下，冰水混合物的温度定义为0摄氏度，沸水的温度定义为100摄氏度。</p>
+        <p>将这两个固定点之间分为100个等分，每一份就是1摄氏度，因此摄氏温标也称为百分温度。</p>
+        <p>通过这个动画，您可以直观地看到温度变化对物质状态的影响，以及温度计的工作原理。</p>
+    </div>
+    
+    <button class="fullscreen-btn" id="fullscreenBtn">全屏显示</button>
+
+    <script>
+        // 获取DOM元素
+        const liquid = document.getElementById('liquid');
+        const mercury = document.getElementById('mercury');
+        const tempDisplay = document.getElementById('tempDisplay');
+        const tempValue = document.getElementById('tempValue');
+        const tempSlider = document.getElementById('tempSlider');
+        const icePointBtn = document.getElementById('icePointBtn');
+        const boilingPointBtn = document.getElementById('boilingPointBtn');
+        const showDivisionBtn = document.getElementById('showDivisionBtn');
+        const playBtn = document.getElementById('playBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const scale = document.getElementById('scale');
+        const bubbles = document.getElementById('bubbles');
+        const ice1 = document.getElementById('ice1');
+        const ice2 = document.getElementById('ice2');
+        const ice3 = document.getElementById('ice3');
+        const highlight = document.getElementById('highlight');
+        const divisionMarks = document.getElementById('divisionMarks');
+        const divisionExplanation = document.getElementById('divisionExplanation');
+        const speechBubble = document.getElementById('speechBubble');
+        const playSpeechBtn = document.getElementById('playSpeechBtn');
+        const stopSpeechBtn = document.getElementById('stopSpeechBtn');
+        
+        // 初始化变量
+        let currentTemp = 0;
+        let isPlaying = false;
+        let animationId;
+        let divisionVisible = false;
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        
+        // 创建温度计刻度
+        function createScale() {
+            scale.innerHTML = '';
+            for (let i = 0; i <= 100; i += 10) {
+                const mark = document.createElement('div');
+                mark.className = 'scale-mark';
+                if (i % 20 === 0) mark.classList.add('major');
+                mark.style.top = `${100 - i}%`;
+                mark.setAttribute('data-value', i);
+                scale.appendChild(mark);
+            }
+        }
+        
+        // 创建100等分刻度
+        function createDivisionMarks() {
+            divisionMarks.innerHTML = '';
+            for (let i = 1; i < 100; i++) {
+                const mark = document.createElement('div');
+                mark.className = 'division-mark';
+                mark.style.top = `${100 - i}%`;
+                divisionMarks.appendChild(mark);
+            }
+        }
+        
+        // 显示/隐藏100等分刻度
+        function toggleDivisionMarks() {
+            divisionVisible = !divisionVisible;
+            const marks = document.querySelectorAll('.division-mark');
+            marks.forEach(mark => {
+                mark.style.opacity = divisionVisible ? '1' : '0';
+            });
+            
+            highlight.style.opacity = divisionVisible ? '1' : '0';
+            divisionExplanation.style.opacity = divisionVisible ? '1' : '0';
+            
+            showDivisionBtn.textContent = divisionVisible ? '隐藏100等分' : '显示100等分';
+            
+            // 更新说话内容
+            if (divisionVisible) {
+                speechBubble.textContent = "看！这就是我提出的100等分刻度。从冰点到沸点之间分为100份，每份就是1摄氏度。";
+                speakText("看！这就是我提出的100等分刻度。从冰点到沸点之间分为100份，每份就是1摄氏度。");
+            } else {
+                speechBubble.textContent = "摄氏温标将冰点设为0度，沸点设为100度，两者之间分为100等份。";
+            }
+        }
+        
+        // 语音合成函数
+        function speakText(text) {
+            // 停止当前语音
+            if (currentUtterance) {
+                speechSynthesis.cancel();
+            }
+            
+            // 创建新的语音
+            currentUtterance = new SpeechSynthesisUtterance(text);
+            currentUtterance.lang = 'zh-CN';
+            currentUtterance.rate = 0.9;
+            currentUtterance.pitch = 1;
+            
+            speechSynthesis.speak(currentUtterance);
+        }
+        
+        // 停止语音
+        function stopSpeech() {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+        }
+        
+        // 更新温度显示
+        function updateTemperature(temp) {
+            currentTemp = temp;
+            
+            // 更新温度显示
+            tempDisplay.textContent = `${temp}°C`;
+            tempValue.textContent = `${temp}°C`;
+            
+            // 更新滑块
+            tempSlider.value = temp;
+            
+            // 更新水银柱高度 (0°C时0%，100°C时100%)
+            const mercuryHeight = temp;
+            mercury.style.height = `${mercuryHeight}%`;
+            
+            // 更新水的颜色和状态
+            updateWaterState(temp);
+            
+            // 更新气泡和冰块显示
+            updateEffects(temp);
+            
+            // 更新说话内容
+            updateSpeech(temp);
+        }
+        
+        // 更新水的状态
+        function updateWaterState(temp) {
+            // 水的颜色从蓝色(冷)到红色(热)
+            const blueValue = Math.max(0, 255 - temp * 2.55);
+            const redValue = Math.min(255, temp * 2.55);
+            const greenValue = Math.max(0, 150 - temp * 1.5);
+            
+            liquid.style.background = `linear-gradient(to top, rgb(${redValue}, ${greenValue}, ${blueValue}), rgb(${Math.min(255, redValue + 50)}, ${Math.min(255, greenValue + 50)}, ${blueValue}))`;
+            
+            // 轻微的水位变化
+            const waterHeight = 50 + (temp / 100) * 10;
+            liquid.style.height = `${waterHeight}%`;
+        }
+        
+        // 更新特效（气泡和冰块）
+        function updateEffects(temp) {
+            // 冰块效果
+            if (temp < 10) {
+                ice1.style.opacity = '1';
+                ice2.style.opacity = '1';
+                ice3.style.opacity = '1';
+            } else {
+                ice1.style.opacity = '0';
+                ice2.style.opacity = '0';
+                ice3.style.opacity = '0';
+            }
+            
+            // 气泡效果
+            bubbles.innerHTML = '';
+            if (temp > 80) {
+                createBubbles(Math.min(20, (temp - 80) * 2));
+            }
+        }
+        
+        // 创建气泡
+        function createBubbles(count) {
+            for (let i = 0; i < count; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                // 随机位置和大小
+                const size = Math.random() * 8 + 5;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 2;
+                const duration = Math.random() * 2 + 1;
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.opacity = '0.7';
+                
+                bubbles.appendChild(bubble);
+            }
+        }
+        
+        // 更新说话内容
+        function updateSpeech(temp) {
+            if (temp === 0) {
+                speechBubble.textContent = "这是冰水混合物，我将其温度定义为0摄氏度。";
+            } else if (temp === 100) {
+                speechBubble.textContent = "这是沸腾的水，我将其温度定义为100摄氏度。";
+            } else if (temp < 20) {
+                speechBubble.textContent = "温度正在升高，注意观察温度计中水银柱的变化。";
+            } else if (temp < 80) {
+                speechBubble.textContent = "温度继续上升，水开始变暖。";
+            } else if (temp < 100) {
+                speechBubble.textContent = "水接近沸腾了，开始出现气泡！";
+            }
+        }
+        
+        // 播放动画
+        function playAnimation() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            let temp = 0;
+            
+            function animate() {
+                if (temp <= 100 && isPlaying) {
+                    updateTemperature(temp);
+                    temp += 0.5;
+                    animationId = setTimeout(animate, 30);
+                } else {
+                    isPlaying = false;
+                }
+            }
+            
+            animate();
+        }
+        
+        // 重置动画
+        function resetAnimation() {
+            isPlaying = false;
+            clearTimeout(animationId);
+            updateTemperature(0);
+        }
+        
+        // 设置冰点
+        function setIcePoint() {
+            isPlaying = false;
+            clearTimeout(animationId);
+            updateTemperature(0);
+            speakText("这是冰水混合物，我将其温度定义为0摄氏度。");
+        }
+        
+        // 设置沸点
+        function setBoilingPoint() {
+            isPlaying = false;
+            clearTimeout(animationId);
+            updateTemperature(100);
+            speakText("这是沸腾的水，我将其温度定义为100摄氏度。");
+        }
+        
+        // 切换全屏
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`全屏请求错误: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+        
+        // 事件监听
+        tempSlider.addEventListener('input', function() {
+            isPlaying = false;
+            clearTimeout(animationId);
+            updateTemperature(parseInt(this.value));
+        });
+        
+        icePointBtn.addEventListener('click', setIcePoint);
+        boilingPointBtn.addEventListener('click', setBoilingPoint);
+        showDivisionBtn.addEventListener('click', toggleDivisionMarks);
+        playBtn.addEventListener('click', playAnimation);
+        resetBtn.addEventListener('click', resetAnimation);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        playSpeechBtn.addEventListener('click', function() {
+            speakText(speechBubble.textContent);
+        });
+        stopSpeechBtn.addEventListener('click', stopSpeech);
+        
+        // 初始化
+        createScale();
+        createDivisionMarks();
+        updateTemperature(0);
+        
+        // 初始问候
+        setTimeout(() => {
+            speakText("欢迎！我是安德斯·摄尔修斯。让我向您介绍我提出的摄氏温标。");
+        }, 1000);
+    </script>
+</body>
+</html>
